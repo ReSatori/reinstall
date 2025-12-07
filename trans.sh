@@ -1630,7 +1630,7 @@ install_nixos() {
         fi
 
         # 备用方案
-        # 1. 从 https://mirror.nju.edu.cn/nix-channels/nixos-25.11/nixexprs.tar.xz 获取
+        # 1. 从 https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-25.11/nixexprs.tar.xz 获取
         #    https://github.com/NixOS/nixpkgs/blob/nixos-25.11/pkgs/tools/package-management/nix/default.nix
         #    https://github.com/NixOS/nixpkgs/blob/nixos-25.11/nixos/modules/installer/tools/nix-fallback-paths.nix
         # 2. 安装最新版 nix，添加 nixos channel 后获取
@@ -1644,7 +1644,7 @@ install_nixos() {
                 head -1 | awk -F- '{print $7}' | grep .)
             rm -f /os/store-paths.xz
             if is_in_china; then
-                sh_mirror=https://mirror.nju.edu.cn/nix
+                sh_mirror=https://mirrors.tuna.tsinghua.edu.cn/nix
             else
                 sh_mirror=https://releases.nixos.org/nix
             fi
@@ -1653,7 +1653,7 @@ install_nixos() {
             # 最新版 nix 在 nixos-install 时可能会出问题
             # https://github.com/bin456789/reinstall/issues/451
             if is_in_china; then
-                sh=https://mirror.nju.edu.cn/nix/latest/install
+                sh=https://mirrors.tuna.tsinghua.edu.cn/nix/latest/install
             else
                 sh=https://nixos.org/nix/install
             fi
@@ -2075,7 +2075,7 @@ MAKEOPTS="-j$(get_build_threads 2048)"
 EOF
 
         # 设置 http repo + binpkg repo
-        # https://mirror.nju.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64-systemd-mergedusr/stage3-amd64-systemd-mergedusr-20240317T170433Z.tar.xz
+        # https://mirrors.tuna.tsinghua.edu.cn/gentoo/releases/amd64/autobuilds/current-stage3-amd64-systemd-mergedusr/stage3-amd64-systemd-mergedusr-20240317T170433Z.tar.xz
         mirror_short=$(echo "$img" | sed 's,/releases/.*,,')
         mirror_long=$(echo "$img" | sed 's,/autobuilds/.*,,')
         profile_ver=$(chroot $os_dir eselect profile show | grep -Eo '/[0-9.]*/' | cut -d/ -f2)
@@ -2112,7 +2112,7 @@ EOF
 
         # 设置 git repo
         if is_in_china; then
-            git_uri=https://mirror.nju.edu.cn/git/gentoo-portage.git
+            git_uri=https://mirrors.tuna.tsinghua.edu.cn/git/gentoo-portage.git
         else
             # github 不支持 ipv6
             is_any_ipv4_has_internet && git_uri=https://github.com/gentoo-mirror/gentoo.git ||
@@ -4425,7 +4425,7 @@ install_qcow_by_copy() {
             if [ -f /os/etc/yum.repos.d/CentOS-Base.repo ]; then
                 # 保持默认的 http 因为自带的 ssl 证书可能过期
                 if is_in_china; then
-                    mirror=mirror.nju.edu.cn/centos-vault
+                    mirror=mirrors.tuna.tsinghua.edu.cn/centos-vault
                 else
                     mirror=vault.centos.org
                 fi
@@ -4688,8 +4688,8 @@ EOF
                 if [ -f $file ]; then
                     # cn.archive.ubuntu.com 不在国内还严重丢包
                     # https://www.itdog.cn/ping/cn.archive.ubuntu.com
-                    sed -i 's/archive.ubuntu.com/mirror.nju.edu.cn/' $file # x64
-                    sed -i 's/ports.ubuntu.com/mirror.nju.edu.cn/' $file   # arm
+                    sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/' $file # x64
+                    sed -i 's/ports.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/' $file   # arm
                 fi
             done
         fi
